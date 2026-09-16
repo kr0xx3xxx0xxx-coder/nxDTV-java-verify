@@ -75,3 +75,18 @@
 - **등록일**: 2026-09-16
 - **내용**: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD 적용하면 chromium만 남길 수 있음.
 - **재논의 조건**: 디스크 공간이 실제로 문제될 때.
+
+## JM-008: PowerShell에서 post-commit 훅 자동 push 조용히 실패
+
+- **상태**: 확인됨, 재발방지 필요
+- **등록일**: 2026-09-16
+- **내용**: PowerShell 세션에서 커밋 시 post-commit 훅의 git push가
+  "could not read Username ... terminal prompts disabled" 오류로 실패한다.
+  훅 자체는 오류를 무시하도록 설계돼 있어(원본 nxDTV 관례 계승) 조용히
+  넘어간다. 같은 push를 Git Bash에서 실행하면 성공한다. Windows Git 자격증명이
+  셸마다 다르게 연결된 것으로 추정된다.
+- **재발 방지**:
+  1. 커밋 후 항상 `git status -sb`로 ahead 상태 확인
+  2. git 작업은 Git Bash 사용을 기본으로 한다
+- **재논의 조건**: 근본 원인(자격증명의 셸별 연결)을 고칠 필요가 실제로 커지면
+  — 예: PowerShell 사용이 잦아지거나 재발이 반복되면.
